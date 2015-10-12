@@ -1,0 +1,22 @@
+$ mv '.Some thing that you cant see.jpg' tet.txt
+$ strings tet.txt
+
+JFIF
+<CREATOR: gd-jpeg v1.0 (using IJG JPEG v62), quality = 100
+$3br
+%&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz
+	#3R
+&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz
+newUT	
+0FNRVMlM0ElMjlVLkRJRC0lM0VJVCUyMQ==
+newUT
+
+## See that '==' ? Its a clue that '0FNRVMlM0ElMjlVLkRJRC0lM0VJVCUyMQ==' may be an encoded base64 string
+## But notice one thing, in base64 the length of the string must be multiples of 4 but, the string length is 35,
+## Therefore remove 3 chars from the start and make it 'RVMlM0ElMjlVLkRJRC0lM0VJVCUyMQ==' Now,
+
+$ echo RVMlM0ElMjlVLkRJRC0lM0VJVCUyMQ== | base64 -d
+ES%3A%29U.DID-%3EIT%21
+
+## As you can see, There is something written as "YES U DID IT" (maybe the encoding was done using different char set)
+## All these commands must be run in the same dir where the image file lies. (Linux)
