@@ -2,16 +2,24 @@
 **Q1.1** Write a program in your favourite language to detect a substitution cipher!
 
 example input 1:
-```abcd
-efgh```
+```
+abcd
+efgh
+```
 output:
-```+4```
+```
++4
+```
 
 example input 2:
-```abcd
-xyza```
+```
+abcd
+xyza
+```
 output:
-```-3```
+```
+-3
+```
 
 Constraints:
 1. All small letters
@@ -23,9 +31,13 @@ Points: 2.5
 casesar cipher, given the offset.
 
 input:
-```-2
-abcd efgh ijkl mnop```
+```
+-2
+abcd efgh ijkl mnop
+```
 output:
-```cdef ghij klmn opqr```
+```
+cdef ghij klmn opqr
+```
 
 Points: 2.5

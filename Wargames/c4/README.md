@@ -1,11 +1,13 @@
 ###TASK:
 In your favourite programming language, write a bruteforcer that checks for:
 
-```Lengths: 1-10
+```
+Lengths: 1-10
 Letters a-z
 Letters A-Z
 Numbers 0-9
-Underscore _```
+Underscore _
+```
 
 Answer is basically a program/function that can enumerate the above.
 
