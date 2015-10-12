@@ -33,30 +33,30 @@ char key[26][26] = {
 int main()
 {
 	char keystream[64], plaintext[64];
-	
+
 	printf( "Keystream : " );
 	scanf( "%s", keystream );
 	printf( "Plaintext : " );
 	scanf( "%s", plaintext );
-	
+
 	int i = 0;
 	char output[64];
-	
+
 	for( i = 0; i < strlen(plaintext); i++)
-    {
-        plaintext[i] = toupper(plaintext[i]);
-    }
-	
+	{
+		plaintext[i] = toupper(plaintext[i]);
+	}
+
 	for( i = 0; i < strlen(keystream); i++)
-    {
-        keystream[i] = toupper(keystream[i]);
-    }
-	
+	{
+		keystream[i] = toupper(keystream[i]);
+	}
+
 	for( i = 0; i < strlen(plaintext); i++ )
 	{
 		output[i] = key[plaintext[i]-'A'][keystream[i]-'A'];
 	}
-    output[i] = '\0';
+	output[i] = '\0';
 
 	printf( "%s \n", output );
 	// system( "pause" );
