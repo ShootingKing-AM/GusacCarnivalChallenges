@@ -1,5 +1,5 @@
-/*
-Task, use the key to do the running-key-cipher.
+###Task
+Use the key to do the running-key-cipher.
 
 http://practicalcryptography.com/ciphers/running-key-cipher/
 
@@ -11,19 +11,19 @@ HOW:
 
 To encipher a message, write the key stream above the plaintext, in this case our key is from a Terry Pratchett book: 'How does the duck know that? said Victor'. If we needed to encipher a longer plaintext, we could just continue reading from the book.
 
-HOWDOESTHEDUCKKNOWTHATSAIDVI
-DEFENDTHEEASTWALLOFTHECASTLE
+```HOWDOESTHEDUCKKNOWTHATSAIDVI
+DEFENDTHEEASTWALLOFTHECASTLE```
 Now we take the letter we will be encoding, 'D', and find it on the first column on the tableau. Then, we move along the 'D' row of the tableau until we come to the column with the 'H' at the top (The 'H' is the keyword letter for the first 'D'), the intersection is our ciphertext character, 'K'.
 
 So, the ciphertext for the above plaintext is:
 
 input:
-HOWDOESTHEDUCKKNOWTHATSAIDVI
-DEFENDTHEEASTWALLOFTHECASTLE
+```HOWDOESTHEDUCKKNOWTHATSAIDVI
+DEFENDTHEEASTWALLOFTHECASTLE```
 output:
-KSBHBHLALIDMVGKYZKYAHXUAAWGM
-*/
+```KSBHBHLALIDMVGKYZKYAHXUAAWGM```
 
+```C
 char key[] = {
 
  {  A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z },
@@ -53,4 +53,4 @@ char key[] = {
  {  Y, Z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X },
  {  Z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y },
 
-}
+}```
