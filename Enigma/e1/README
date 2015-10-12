@@ -1,17 +1,17 @@
-TASK:
-Q1.1 Write a program in your favourite language to detect a substitution cipher!
+###TASK:
+**Q1.1** Write a program in your favourite language to detect a substitution cipher!
 
 example input 1:
-abcd
-efgh
+```abcd
+efgh```
 output:
-+4
+```+4```
 
 example input 2:
-abcd
-xyza
+```abcd
+xyza```
 output:
--3
+```-3```
 
 Constraints:
 1. All small letters
@@ -19,13 +19,13 @@ Constraints:
 
 Points: 2.5
 
-Q1.2 Write a program, in your favourite language, that can completely decipher a
+**Q1.2** Write a program, in your favourite language, that can completely decipher a
 casesar cipher, given the offset.
 
 input:
--2
-abcd efgh ijkl mnop
+```-2
+abcd efgh ijkl mnop```
 output:
-cdef ghij klmn opqr
+```cdef ghij klmn opqr```
 
 Points: 2.5
