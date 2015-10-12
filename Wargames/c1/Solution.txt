@@ -1,0 +1,4 @@
+grep -rl 'GUSACCARNIVAL2015' .
+
+## Simple Enough ? 'GUSACCARNIVAL2015' in 492.dat
+## You should traverse to 'c1' directory and run this command (linux)
