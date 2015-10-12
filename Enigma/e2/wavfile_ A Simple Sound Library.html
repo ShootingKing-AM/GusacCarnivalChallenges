@@ -1,0 +1,174 @@
+
+<!-- saved from url=(0062)https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>wavfile: A Simple Sound Library</title>
+<link href="./wavfile_ A Simple Sound Library_files/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body><h1>wavfile: A Simple Sound Library</h1>
+
+<tt>wavfile</tt> is a simple sound library for use in CSE 20211.
+This library allows you to generate arbitrary sound waveforms
+in an array, then write them out to a standard WAV format file,
+which can then be played back by almost any kind of computer.
+<p>
+<b>Note: As a courtesy to others in the course or the lab, please use headphones when working with sounds.</b>
+
+</p><h2>Digital Sound Primer</h2>
+
+A computer generates digital sounds by creating a digital <b>waveform</b>.
+A waveform is simply a sequence of digital values that describe how a
+speaker is to be physically pulsed by an digital-to-analog (DAC) converter.
+Positive values in the waveform indicate the speaker is to be pushed slightly outward,
+creating positive air pressure, while negative values indicate the speaker is
+to be pulled slightly inward, creating negative air pressure.
+<p>
+The <b>sampling rate</b> of a digital sound indicates how many digital
+values are used per second of playback.  The standard for CD-quality
+sound is a sampling rate of 44.1KHz.  The <b>volume</b> of a digital
+sound is simply the <b>amplitude</b> of the waveform: bigger changes mean
+louder sounds.
+</p><p>
+The character and quality of a sound is entirely described by the
+shape of its waveform.  Try clicking on the waveforms below to see
+what they sound like.  A sine wave is smooth and open, like a flute.
+A square wave is piercing, like a smoke alarm.  A triangle wave
+sounds rather brassy.  The random wave sounds like white noise.
+</p><p>
+</p><center>
+<table>
+<tbody><tr>
+<td align="center"><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/sine.wav"><b>Sine Wave</b><br><img border="0" src="./wavfile_ A Simple Sound Library_files/sine.wav.gif"></a></td>
+<td align="center"><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/square.wav"><b>Square Wave</b><br><img border="0" src="./wavfile_ A Simple Sound Library_files/square.wav.gif"></a></td>
+<td align="center"><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/triangle.wav"><b>Triangle Wave</b><br><img border="0" src="./wavfile_ A Simple Sound Library_files/triangle.wav.gif"></a></td>
+<td align="center"><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/noise.wav"><b>Random Wave</b><br><img border="0" src="./wavfile_ A Simple Sound Library_files/noise.wav.gif"></a></td>
+</tr></tbody></table>
+</center>
+<p>
+
+A sound with a regular pattern has a fundamental <b>frequency</b>
+which is the number of peaks in the waveform per second.
+The sine, square, and triangle waves above all have a frequency of
+440Hz, which is a concert-A pitch.
+(Note also that the frequency is not the same as the sampling rate.)
+</p><p>
+Most sounds in the real world are not as clean and simple as
+the waveforms above.  Instead, they are a sum of
+multiple waveforms at different frequencies.
+Musical instruments tend to produce a strong waveform at the
+pitch actually played.  This is known as the <b>fundamental frequency</b>.
+At the same time, they also produce quieter sounds at integer
+multiples of the fundamental frequency, known has <b>harmonics</b>.
+</p><p>
+For example, click on the three sounds below.
+The first is a sine wave at 440Hz.
+The second adds a harmonic at 880Hz.
+The third adds another harmonic at 1760 Hz.
+If you listen carefully, you will see that
+the sounds with more harmonics are more pleasant
+and more realistic.
+(I think it sounds like a pipe organ.)
+</p><p>
+
+</p><center>
+<table>
+<tbody><tr>
+<th>Fundamental<br>Frequency
+</th><th>Fundamental<br>+ 1 Harmonic
+</th><th>Fundamental<br>+ 2 Harmonics
+</th></tr><tr>
+<td><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/sine.wav"><img border="0" src="./wavfile_ A Simple Sound Library_files/sine.wav.gif"></a>
+</td><td><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/sine2.wav"><img border="0" src="./wavfile_ A Simple Sound Library_files/sine2.wav.gif"></a>
+</td><td><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/sine3.wav"><img border="0" src="./wavfile_ A Simple Sound Library_files/sine3.wav.gif"></a>
+</td></tr></tbody></table>
+</center>
+
+<h2>Getting Started</h2>
+
+It is very easy to generate waveforms like those above
+to create digital sounds and (eventually) music.
+To get started, download the following files:
+
+<dir>
+<li><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/wavfile.h">wavfile.h</a>
+</li><li><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/wavfile.c">wavfile.c</a>
+</li><li><a href="https://www3.nd.edu/~dthain/courses/cse20211/fall2013/wavfile/example.c">example.c</a>
+</li></dir>
+
+And compile them together as follows:
+
+<div class="code">gcc example.c wavfile.c -o example -lm</div>
+
+Then, run the example program:
+
+<div class="code">./example</div>
+
+The program creates a file called <tt>sound.wav</tt>.
+To play back the file on Linux, use the <tt>play</tt> command:
+
+<div class="code">play sound.wav</div>
+
+<h2>How it Works</h2>
+
+The sound library only has three functions:
+
+<div class="func">FILE * wavfile_open( const char *filename );</div>
+
+<tt>wavfile_open</tt> creates a new file whose name is given by the first argument.  It automatically puts the standard WAV header into the file for you. If successful, it returns a pointer to a <tt>FILE</tt> object.  If unsucessful, it returns null.
+
+<div class="func">void wavfile_write( FILE *file, short data[], int length );</div>
+
+<tt>wavfile_write</tt> writes data to an open file.  The first argument must be a pointer to a <tt>FILE</tt> object returned by <tt>wavfile_open</tt>.  The second argument is an array of waveform data, and the third argument is the number of samples to write.  This function may be called multiple times to add more sounds to an open wavfile.
+
+<div class="func">void wavfile_close( FILE * file );</div>
+
+<tt>wavfile_close</tt> completes writing to a wavfile.  It is required to call <tt>wavfile_close</tt> when your sound is complete, otherwise the file will not be usable.
+
+<div class="func">#define WAVFILE_SAMPLES_PER_SECOND 44100</div>
+
+Finally, the header contains a constant <tt>WAVFILE_SAMPLES_PER_SECOND</tt>
+which indicates how many samples are in a waveform per second of playback.
+
+<h2>Example Program</h2>
+
+The program <tt>example.c</tt> creates a simple wavfile that plays a sine-wave
+for one second.   It works as follows:
+<p>
+First, an array of <tt>short</tt>s is created to hold
+a waveform that will last for two seconds:
+
+</p><div class="code">const int NUM_SAMPLES = WAVFILE_SAMPLES_PER_SECOND*2;<br>
+short waveform[NUM_SAMPLES];</div>
+
+For clarity, we define a few variables to indicate
+the frequency and volume of the sound.
+440Hz is a concert A pitch, and the volume of the
+waveform is simply the amplitude, which can be up to 32768.
+
+<div class="code">double frequency = 440.0;<br>
+int volume = 32000;</div>
+
+Then, we fill the array with a sine wave of the desired
+frequency:
+
+<div class="code">int i;<br>
+for(i=0;i&lt;NUM_SAMPLES;i++) {<br>
+    double t = (double) i / WAVFILE_SAMPLES_PER_SECOND;<br>
+    waveform[i] = volume*sin(frequency*t*2*M_PI);<br>
+}</div>
+
+Finally, we use the wavfile library to write out the
+waveform to a file:
+
+<div class="code">FILE * f = wavfile_open("sound.wav");<br>
+wavfile_write(f,waveform,length);<br>
+wavfile_close(f);
+</div>
+
+Using the simple sound library, writing out the sound file is easy.
+All of the challenge lies in constructing a waveform that plays
+the desired sound.
+
+
+
+</body></html>
